@@ -145,6 +145,42 @@ else
      {echo "not connected";}
  }
 ?>
+
+<h3>update data form </h3>
+<form method="get">
+<p>database name: <input type='text' name="dbname"/></p>
+<p>table name: <input type='text' name="dbtable" /></p>
+<h6>old content in table </h6>
+<p>name <input type="text" name="oldname"/></p>
+<p>surname <input type="text" name="oldsurname"/></p>
+<h6>content to update </h6>
+<p>name <input type="text" name="newname"/></p>
+<p>surname <input type="text" name="newsurname"/></p>
+<p><button type="submit" name="updateSet">update</button></p>
+</form>
+<?php
+  
+  if(isset($_GET['updateSet']))
+   {echo "updating data";
+    updateData($_GET['dbname'],$_GET['dbtable'],$_GET['oldname'],$_GET['oldsurname'],$_GET['newname'],$_GET['newsurname']);
+   } 
+
+  function updateData($dbname,$table,$oname,$osurname,$nname,$nsurname){
+   $connect=connectDB($dbname);
+   $sql="update $table set name = '$nname', surname='$nsurname' where name='$oname' and surname='$osurname' ";
+ 
+   if($connect)
+    {if(mysqli_query($connect,$sql))
+      {echo "$oname $osurname updated";}
+     else
+      {echo "error: could not update";}
+    }
+   else
+    {echo "not connected";}
+  }  
+
+?>    
+
 </body>
 </html>
 
